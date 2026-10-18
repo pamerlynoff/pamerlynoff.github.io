@@ -1,0 +1,374 @@
+/* ============================================================
+   Дмитров — личный сайт о городе
+   Общий стиль для всех страниц (светлая и тёмная тема).
+   Шрифты — системные, ничего не подгружается из интернета.
+   ============================================================ */
+
+/* ---------- Переменные ---------- */
+:root {
+  --bg: #f6f6f3;              /* общий фон, тёплый светло-серый */
+  --bg-card: #ffffff;         /* фон карточек */
+  --text: #1c1c20;            /* основной текст */
+  --muted: #6e6e76;           /* приглушённый текст */
+  --line: #e6e6e1;            /* тонкие линии и границы */
+  --accent: #3a6aea;          /* спокойный синий акцент */
+  --accent-2: #5b8cff;
+  --accent-soft: rgba(58, 106, 234, 0.08);
+  --ph: #eceae4;              /* фон заглушки фото */
+  --radius: 16px;
+  --container: 1080px;
+  --head-h: 64px;             /* высота шапки */
+  --shadow: 0 6px 24px rgba(20, 24, 40, 0.06);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg: #13141a;
+  --bg-card: #1d1f26;
+  --text: #ececf2;
+  --muted: #9c9ea9;
+  --line: #2a2c35;
+  --accent: #7fa0f8;
+  --accent-2: #9ab4ff;
+  --accent-soft: rgba(127, 160, 248, 0.12);
+  --ph: #232530;
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- База ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .3s ease, color .3s ease;
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--accent); text-decoration: none; }
+
+::selection { background: var(--accent-soft); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+section[id] { scroll-margin-top: calc(var(--head-h) + 8px); }
+
+/* ---------- Подписи-лейблы (стиль «редакции») ---------- */
+.label {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* ---------- Шапка ---------- */
+.site-head {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.head-in {
+  height: var(--head-h);
+  display: flex; align-items: center; gap: 14px;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 800; font-size: 18px; color: var(--text);
+  letter-spacing: -.01em; transition: color .2s;
+}
+.brand:hover { color: var(--accent); }
+.brand img { width: 26px; height: 26px; }
+
+.main-nav { margin-left: auto; display: flex; gap: 2px; }
+.main-nav a {
+  color: var(--muted); font-size: 15px; font-weight: 500;
+  padding: 9px 13px; border-radius: 10px; transition: color .2s, background .2s;
+}
+.main-nav a:hover { color: var(--accent); background: var(--accent-soft); }
+.main-nav a.active { color: var(--accent); font-weight: 700; }
+
+.head-acts { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 11px;
+  border: 1px solid var(--line); background: var(--bg-card); color: var(--text);
+  display: grid; place-items: center; cursor: pointer;
+  transition: border-color .2s, color .2s, transform .2s;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.icon-btn svg { width: 18px; height: 18px; }
+
+/* Иконки темы: показываем «луну» в светлой теме, «солнце» в тёмной */
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="dark"] .icon-moon { display: none; }
+
+.nav-toggle { display: none; }
+
+/* ---------- Кнопки ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-radius: 99px;
+  font-size: 15px; font-weight: 600; font-family: var(--font);
+  border: 1px solid transparent; cursor: pointer;
+  transition: transform .2s, box-shadow .25s, background-color .25s, color .25s, border-color .25s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn svg { width: 16px; height: 16px; }
+.btn.primary { background: var(--accent); color: #fff; box-shadow: 0 8px 22px rgba(58, 106, 234, .25); }
+.btn.primary:hover { box-shadow: 0 10px 28px rgba(58, 106, 234, .35); }
+.btn.ghost { background: var(--bg-card); color: var(--text); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- Герой (главная) ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  padding: 88px 0 76px; text-align: center;
+}
+.hero::before {
+  content: ""; position: absolute;
+  left: -20%; right: -20%; bottom: -55%;
+  height: 60%; pointer-events: none;
+  background: radial-gradient(55% 100% at 50% 100%, rgba(58, 106, 234, .13), transparent 70%);
+}
+.hero-in { position: relative; }
+.hero h1 {
+  font-size: clamp(46px, 10vw, 86px);
+  font-weight: 900; letter-spacing: -.035em; line-height: 1.02;
+  margin: 16px 0 22px;
+}
+.hero .tagline {
+  color: var(--muted);
+  font-size: clamp(16px, 2.6vw, 19px);
+  max-width: 640px; margin: 0 auto 32px;
+}
+.hero-acts { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ---------- Секции ---------- */
+.section { padding: 62px 0; }
+.section-head { margin-bottom: 32px; }
+.section-head h2 {
+  font-size: clamp(23px, 4vw, 33px);
+  font-weight: 800; letter-spacing: -.02em;
+}
+.section-head p { color: var(--muted); margin-top: 8px; max-width: 560px; }
+
+.more {
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--accent); font-weight: 600; font-size: 15px;
+  margin-top: 24px; transition: gap .2s;
+}
+.more:hover { gap: 11px; }
+.more svg { width: 15px; height: 15px; }
+
+/* ---------- Заголовок внутренних страниц ---------- */
+.page-head { padding: 56px 0 30px; }
+.page-head h1 {
+  font-size: clamp(30px, 5.5vw, 44px);
+  font-weight: 900; letter-spacing: -.02em; line-height: 1.12;
+}
+.page-head .lead { color: var(--muted); margin-top: 12px; max-width: 640px; font-size: 17px; }
+
+/* ---------- Карточки постов ---------- */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+.post-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 24px; display: flex; flex-direction: column; gap: 10px;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.post-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent); }
+.post-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.post-card h3 { font-size: 18px; font-weight: 700; line-height: 1.35; }
+.post-card h3 a { color: var(--text); transition: color .2s; }
+.post-card h3 a:hover { color: var(--accent); }
+.post-card p { font-size: 14.5px; color: var(--muted); flex: 1; }
+.post-card .read { color: var(--accent); font-weight: 600; font-size: 14px; }
+
+.tag {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-soft);
+  padding: 3px 9px; border-radius: 99px; white-space: nowrap;
+}
+
+/* ---------- Заглушка фото ---------- */
+.ph {
+  background: var(--ph);
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius);
+  display: flex; flex-direction: column; gap: 8px;
+  align-items: center; justify-content: center;
+  color: var(--muted); text-align: center;
+  padding: 12px;
+}
+.ph svg { width: 26px; height: 26px; opacity: .5; }
+.ph span { font-size: 12.5px; letter-spacing: .02em; }
+
+/* ---------- Места ---------- */
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.place {
+  background: var(--bg-card);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.place:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent); }
+.place .ph { border: none; border-bottom: 1.5px dashed var(--line); border-radius: 0; aspect-ratio: 16 / 10; }
+.place-body { padding: 16px 18px 18px; }
+.place-body h3 { font-size: 16.5px; font-weight: 700; }
+.place-body p { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+/* ---------- Галерея ---------- */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.g-item { text-align: center; }
+.g-item .ph { aspect-ratio: 4 / 3; border-radius: 12px; width: 100%; }
+.g-item figcaption { font-size: 13px; color: var(--muted); margin-top: 9px; }
+
+/* ---------- Календарь релизов ---------- */
+.rel-list { border-top: 1px solid var(--line); margin-top: 6px; }
+.rel {
+  display: flex; gap: 18px; align-items: baseline;
+  padding: 17px 4px; border-bottom: 1px solid var(--line);
+  transition: background .2s;
+}
+.rel:hover { background: var(--accent-soft); }
+.rel time {
+  flex: 0 0 96px; font-size: 13px; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.rel .r-title { font-weight: 600; font-size: 15.5px; color: var(--text); transition: color .2s; }
+.rel .r-title:hover { color: var(--accent); }
+.rel .tag { margin-left: 10px; }
+.rel .r-note { color: var(--muted); font-size: 13.5px; margin-left: 8px; }
+
+/* ---------- Текстовая страница (блог-стиль) ---------- */
+.prose { max-width: 680px; }
+.prose p { font-size: 17px; line-height: 1.8; margin-bottom: 20px; }
+.prose strong { font-weight: 700; }
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px; margin: 28px 0;
+}
+.fact {
+  background: var(--bg-card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px 16px 14px;
+}
+.fact b { display: block; font-size: 21px; font-weight: 800; color: var(--accent); }
+.fact span { font-size: 13px; color: var(--muted); }
+
+.note {
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius: 14px; padding: 20px 22px; margin-top: 32px;
+}
+.note h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.note p { font-size: 15px; color: var(--muted); margin: 0; }
+
+/* ---------- Страница поста (стиль Telegraph) ---------- */
+.post { max-width: 680px; margin: 0 auto; padding: 48px 0 72px; }
+.post h1 {
+  font-size: clamp(28px, 5.5vw, 40px);
+  font-weight: 900; letter-spacing: -.02em; line-height: 1.15;
+  margin: 8px 0 16px;
+}
+.post .post-meta {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  color: var(--muted); font-size: 14px;
+  padding-bottom: 24px; border-bottom: 1px solid var(--line); margin-bottom: 32px;
+}
+.post-body { font-size: 17px; line-height: 1.8; }
+.post-body p { margin-bottom: 22px; }
+.post-body .lead-p { font-size: 19px; color: var(--muted); }
+.post-body h2 { font-size: 22px; font-weight: 800; margin: 36px 0 14px; letter-spacing: -.01em; }
+.post-body blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 2px 0 2px 20px; margin: 30px 0;
+  color: var(--muted); font-style: italic;
+}
+.post-body figure { margin: 34px 0; }
+.post-body .ph { aspect-ratio: 16 / 9; border-radius: 14px; }
+.post-body figcaption { font-size: 13px; color: var(--muted); text-align: center; margin-top: 10px; }
+.post-foot {
+  margin-top: 46px; padding-top: 22px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; gap: 12px;
+  font-size: 15px; flex-wrap: wrap;
+}
+
+/* ---------- Подвал ---------- */
+.site-foot {
+  border-top: 1px solid var(--line);
+  padding: 36px 0; margin-top: 20px;
+  text-align: center; color: var(--muted); font-size: 14px;
+}
+.site-foot .small { font-size: 12.5px; margin-top: 6px; opacity: .8; }
+
+/* ---------- Появление при прокрутке ---------- */
+/* Класс .js ставит скрипт в <head> — значит, без JS всё просто видно. */
+html.js .reveal { opacity: 0; transform: translateY(16px); }
+.reveal { transition: opacity .6s ease, transform .6s ease; }
+html.js .reveal.in { opacity: 1; transform: none; }
+
+/* ---------- Адаптивность ---------- */
+@media (max-width: 900px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .hero { padding: 62px 0 56px; }
+  .section { padding: 46px 0; }
+  .nav-toggle { display: grid; }
+  .main-nav {
+    position: absolute; top: var(--head-h); left: 0; right: 0;
+    flex-direction: column; gap: 4px; display: none;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 16px 16px;
+    box-shadow: var(--shadow);
+  }
+  .main-nav.open { display: flex; }
+  .main-nav a { padding: 12px 14px; font-size: 16px; }
+  .rel { flex-direction: column; gap: 3px; align-items: flex-start; }
+  .rel time { flex: none; font-size: 12.5px; }
+  .rel .tag { margin-left: 0; }
+  .rel .r-note { margin-left: 0; }
+}
+
+@media (max-width: 520px) {
+  .posts-grid, .places-grid { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(40px, 14vw, 56px); }
+  .post { padding-top: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  html.js .reveal { opacity: 1; transform: none; }
+}
